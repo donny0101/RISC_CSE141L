@@ -1,0 +1,172 @@
+
+//Program 1 (Lab 1)
+
+//REMOVED IDEAS
+    //movr r4, r1 // r4 = r1 = 61
+    // ldr r4, r0 //r4 = dataMem[61] = # of prepending spaces
+
+//START:
+
+//prepend a preamble of space characters
+
+    //first get number of prepending spaces
+ ADDi #31 //r0 = 31
+ MOVr r1, r0 //r1 = r0 = 31
+ ADDi #30 //r0 = 30
+ ADDr r1, r0 // r1 = r1+r0 = 31+30 = 61
+ MOVr r5, r1 //r5 = r1 = 61
+ LDR r5, r0 //r5 = dataMem[61] = # of prepending spaces 
+ 
+    //get lfsr tap pattern index
+ADDi #1 //r0 = 1
+ADDr r1,r0 // r1 = r1+r0 = 61 + 1 = 62
+MOVr r2, r1 //r2 = r1 = 62
+LDR r2, r0 //r2 = dataMem[62] = index of LFSR pattern(taps used for encrpt)
+MOVr r0, r1 //r0 = r1 = 62
+ADDr r0, r1 // r0 = r0 + r1 = 62 + 62 = 124
+MOVr r7, r0 // r7 = r0 = 124
+ADDi #4 //r0 = 4
+ADDr r7, r0 //r7 = r7 + r0 = 124 + 4 = 128
+ADDr r7, r2 //r7 = 128 + tap index where tap pattern stored in upper dataMem
+MOVrhl r7, r2 //r2  now holds upper DataMem tap pattern address
+LDR r2, r0 //loads tap pattern from upper dataMem, r0 doesnt do anything
+
+    //get LFSR starting state
+ADDi #1 //r0 = 1
+ADDr r1, r0 // r1 = r1+r0 = 62 + 1 = 63
+MOVr r7, r1 // r7 = r1 = 63
+LDR r7, r0 // r7 = dataMem[63] = LFSR starting state(curr lfsr)
+
+    //encrypted prepending space (number from dataMem[61])
+
+ADDi #0 // r0 = 0
+MOVr r3, r0 // r3 = r0 = 0 r3 will manage loop count
+ADDi #1 //r0 = 1
+MOVr r4, r1 // r4 = r1 = 63
+ADDr r4, r0 // r4 = r4+r0 = 63+1= 64 r4 will manage address
+LDR r1, r0 // r1 - dataMem[63] = curr lfsr (starting) = r7, r0 doesnt do anything
+
+crptoPreSpaces
+    CMP r5, r3 //will produce zero flag once equal
+    Badd setupCrptoMsg //will branch if zero flag AND branch are on
+     ADDi #31 //r0 = 31 (space)
+     MOVr r6, r0 //r6 = r0 = 31
+     ADDi #1 //r0 = 1
+     ADDr r6, r0 //r6 = r6 + r0 = 31 + 1 = 32
+     MOVrhl r6, r0 // r0 = 32
+     XORr r0, r1 //bitwise XOR space and curr LFSR(r1), r0 holds value after
+     STRm r4, r0 //stores r0 (data) into memory address (r4)
+    MOVrhl r7, r1 // r1 = r7; get curr lfsr 
+     ADDi #1 //r0 = 1
+     ADDr r4, r0 // r4 = r4 + 1 ; increments to next memory address
+     ADDr r3, r0 //increment r3, r3+1
+     ANDr r7, r2 //curr_lfsr & taps
+     RXOR r7, r0 //reduction xor on curr lfsr&taps, bottom 7 bits of r7, r0 doesnt do anything
+     LSL r1, r0 //shift r1 left by r0, r0 = 1 
+     ORRr r7, r1 //r7 =orr left shifted curr_lfsr&reduc(curr_lfsr&taps),past 2 lines using lfsr formula from projOverview
+    MOVrhl r7, r1 // r1  will hold curr_lfsr for next loop 
+     CMP r0, r0 //produce zero flag to branch, also makes r0 = 0
+    Badd crptoPreSpaces
+
+setupCrptoMsg
+    ADDi #0 //r0 = 0
+    MOVr r1, r0 // r1 = r0 = 0 - og msg char 
+    MOVr r3, r0 // r3 = r0 = 0 - loop counter
+    ADDi #31 // r0 = 31
+    MOVr r6, r0 //r6 = r0 =31
+    ADDi #31 //r0 = 31
+    ADDr r6, r0 // r6 = r6+r0 = 31+31=62 , loop max
+    ADDi #1 //r0 = 1
+    ADDr r6, r0 // r6 + 1 = 63
+    CMP r0, r0 //produce zero flag to branch, also makes r0 = 0
+    Badd CrptoMsg
+
+CrptoMsg
+    CMP r6, r3 //will produce zero flag once equal
+    Badd SetupReducParity //will branch if zero flag AND branch are on 
+     LDR r1, r0 // r1 = dataMem[0] = first char of og msg, r0 doesn't do anything
+     MOVrhl r7, r0 // set r0 = curr_lfsr
+     XORr r0, r1 //r0 = xor curr_lfsr (r0) & og msg char (r1),
+    STRm r4, r0 //stores r0 XOR (data) into mem address (r4) 
+     ADDi #1 //r0 = 1
+     ADDr r3, r0 //r3 = r3+1
+     MOVr r1, r3 //set r1 to next incremented mem address
+     ADDr r4, r0 //r4 = r4 + 1
+     MOVrhl r7, r0 // set r0 to curr_lfsr
+     MOVr r5, r0 //sets r5 to curr_lfsr
+     ANDr r7, r2 //curr_lfsr & taps
+    RXOR r7, r0 //reduction xor on curr lfsr&taps, bottom 7 bits of r7
+    ADDi #1 //r0 = 1
+     LSL r5, r0 //shift r5 left by r0, r0 = 1
+     MOVrhl r5, r0 //sets r0 ro shifted curr_lfsr 
+     ORRr r7, r0 //r7 = orr left shifted curr_lfsr & reduc(curr_lfsr&taps)
+     CMP r0, r0 //produce zero flag to branch
+     Badd CrptoMsg
+
+SetupReducParity
+    ADDi #31 // r0 = 31 
+    MOVr r1, r0 // r1 = 31
+    ADDi #31 // r0 = 31
+    ADDr r1, r0 // r1=r1+r0 = 31+31 = 62
+    ADDi #2 // r0 = 2
+    ADDr r1, r0 // r1 = r1+ r0 = 62 + 2 = 64
+    MOVr r6, r1 //r6=r1=64
+    MOVr r3, r1 //r3=r1=64 LOOP COUNTER 
+    MOVr r4, r1 //r4 = r1 = 64 ADDRESS
+    ADDr r6, r1 //r6 = r6+r1 = 64 + 64 = 128
+
+    ADDi #31 //r0 = 31
+    ADDr r1, r0 //r1 = r1+r0 = 64 + 31 = 95
+    ADDr r1, r0 //r1 = r1+r0 = 95 + 31 = 126
+    ADDi #1 //r0 = 1
+    ADDr r1, r0 // r1 =r1+r0 = 126+1 = 127
+    CMP r0, r0 //produce zero flag to branch
+    Badd ReducParity
+
+ReducParity
+    CMP r6, r3 //will produce parity flag once equal
+    Badd DONE
+    LDR r4,r0 //r0= dataMem[64+how many loops] =  encrpted char 
+    MOVrhl r4, r0 // r0 holds encrpted char
+    MOVr r5, r0 // r5 = encrpyted char  
+    RXOR r5, r0 //r5 = reduction xor of encrpted char, r0 doesnt do anything  
+    ADDi #7 // r0 = 7
+    LSL r5, r0 //left shift r5 by 7 bits
+    MOVrhl r4, r0 //r0 holds encrpyted char
+    ANDr r0, r1 //r0 & 127, keeps bottom 7 bits same and makes top bit 0
+    ORRr r5, r0 //r5 = adds reduction xor to position 7
+    MOVrhl r5, r0 //r0 = r5 = encrpyted char with parity bit in bit 7
+    STRm r3, r0 //stores in address (r3) data (r0)
+    ADDi #1 // r0 = 1
+    ADDr r3, r0 // r3 increments
+    MOVr r4, r3 //r4 holds Next address
+    CMP r0, r0 //produce zero flag
+    Badd ReducParity 
+
+DONE
+    STOP r0, r0 //opcode
+
+
+
+
+
+
+
+
+
+      
+
+
+
+
+
+
+
+     
+
+    
+
+
+    
+
+

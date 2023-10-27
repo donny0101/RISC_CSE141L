@@ -1,0 +1,232 @@
+//program 2(Lab 1)
+//LDRr r5, r0  r5 = dataMem[64]
+
+//load 64
+ADDi #31 // r0 = 31
+MOVr r1, r0 // r1 = r0 = 31
+ADDi #1  // r0 =  1
+ADDr r1, r0 // r1 = r1 + r0 =32 
+MOVr r2, r1 // r2 = r1 = space
+ADDi #31 // r0 =31
+ADDr r1,r0 // r1 = r1 + r0 = 63
+ADDi #1 // r0 = 1
+ADDr r1,r0 // r1 = r1 + r0 = 64
+MOVr r5, r1 // r5 = r1 = 64
+
+
+//load 71
+ADDi #7 // r0 = 7
+ADDr r1,r0 // r1 = r1 + r0 = 64 + 7 = 71
+MOVr r6, r1 //r6 = r1 = 71
+LDR r6, r0 // r6 = datamem[71], 7th state, r0 doesnt do anything 
+XORr r6, r2 // final state, XOR'd with space
+
+ADDi #31    // r0 = 31
+ADDr r1, r0 // r1 = 71 + 31= 102
+ADDi #25    // r0 = 25
+ADDr r1, r0 // r1 = 102 + 25 = 127
+
+
+MOVrhl r5, r3 // r3 = r5 = 64  
+LDR r3, r0 // r3 = dataMEm[64], r0 doesnt do anything
+//clear MSB
+ANDr r3, r1 //clears top bit, preserves bottom 7 
+ANDr r6, r1 //clears top bit, preserves bottom 7
+
+XORr r3, r2 // initial state, XOR with space (r2)
+
+//fix registers
+MOVr r5, r1   // r5 = 127
+MOVr r1, r3 // r1 =r3 = curr_lfsr 
+MOVrhl r6, r2 // r2 = r6 = final state
+
+//load counter
+ADDi #0 // r0 = 0
+MOVr r3, r0 // r3 = r0 = 0
+// load tap pattern start index
+MOVrhl  r5, r0 // r0 = 127
+MOVr r4, r0   //
+ADDi #1       //
+ADDr r4, r0   // r4 =128
+
+find
+    MOVr r7, r1   // r7 = r1, initial state
+    MOVrhl r4, r0 // r0 = tap start index
+    MOVr r5, r0   //      
+    ADDr r5, r3   //
+    LDR  r5, r0   // r5 = tap pattern    
+    
+    // 1st transition
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+    
+    // 2nd
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+    
+    // 3rd
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+
+    // 4th
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+    
+
+    // 5th
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+   
+    // 6th
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+    
+    // 7th
+    MOVrhl r7, r0 // r0 = curr state
+    MOVr r6, r0   // r0 = curr state
+    MOVrhl r5, r0 // r0  = tap pattern 
+    ANDr r7, r0   //  curr_lsfr & taps
+    RXOR r7, r0   //
+    ADDi #1       //
+    LSL  r6, r0   //
+    MOVrhl r6, r0 //
+    ORRr r7, r0   // next LSFR
+     
+    CMP r7, r2  // produce flag when equal
+    Badd setupDcrpt //branch when zero flag AND branch are on
+    
+    ADDi #1      // r0 = 1
+    ADDr r3, r0  //r3 + 1
+    CMP r0, r0  // produce zero flag to branch
+    Badd find   // back
+
+    
+        		 
+setupDcrpt
+    ADDi #31 
+    MOVr r2, r0   //
+    ADDr r2, r0   // 62
+    ADDr r2, r0   // 93
+    ADDr r2, r0   // 124
+    ADDi #3       // 
+    ADDr r2, r0   // r2 = 127
+    
+    MOVr r1, r2   //r1 = r2 = 127
+    ADDi #1       // r0 = 1
+    ADDr r1, r0   // r1 = r1+r0 = 127+1 = 128 
+    ADDr r3, r1  // tap pattern index + 128
+
+    LDR r3, r0   // load tap pattern, r0 doesnt do anything, Upper DM has tap patterns
+    ADDi #0      // r0 = 0
+    MOVr r1, r0  // store index, r1 = r0  = 0 
+    ADDi #31     // r0 = 31
+    MOVr r4, r0  // r4 = 31 
+    ADDr r4, r0  // r4 = r4+r0 = 31 + 31 = 62
+    ADDi #1      //r0 = 1
+    ADDr r4, r0  // r4 = 63 loop max
+    MOVrhl r4, r0// r0 = r4 = 63
+    MOVr r6, r0 // r6 = r0 = 63 
+    ADDi #1     //r0 = 1
+    ADDr r6, r0  // r6 = 64
+    LDR r6, r0  //r6 = dataMem[64], r0 doesnt do anything 
+    ANDr r6, r2  // clear MSB
+    ADDi #31     //r0 = 31
+    MOVr r7, r0  //r7 = r0  = 31
+    ADDi #1      // r0 = 1
+    ADDr r7, r0  //  r7 = 32 space
+    MOVrhl r7, r2// r2 = r7 space
+    XORr r6, r2  // r6 = initial state
+    ADDi #31     //r0 = 31 
+    ADDr r7, r0  // r7=r7+r0= 32 + 31 = 63
+    ADDr r7, r0  // r7 = r7+r0 = 63+31 = 94
+    ADDr r7, r0  // r7 = r7+r0 = 94+31 = 125
+    ADDi #2 //r0 = 2
+    ADDr r7, r0  // r7= r7+r0 = 125 + 2= 127
+    MOVrhl r4, r2 // r2 = r4 = 63 
+    ADDi #1 //r0 = 1
+    ADDr r4, r0 // r4 = r4 + 1 = 64
+    ADDr r2, r0 // r2= r2+r0= 63+1 = 64 index drcpt message
+    CMP r0, r0  // produce zero flag tro branch
+    Badd Dcrpt    
+
+Dcrpt
+    CMP r4, r1  // prdouce zero flag when euqal
+    Badd DONE   //will branch if 0 
+    MOVr r5, r2 //  r5 = r2 = 64
+    LDR r5, r0 //r5 = dataMem[64], r0 doesnt do anything 
+    MOVrhl r6, r0 // r0 = r6 = curr_state 
+    XORr r5, r0 //r5 = dataMem[64] ^ curr_state = decrypted char
+    MOVrhl r7, r0 //r0 = r7 = 127
+    ANDr r5, r0  // clear MSB 
+    MOVrhl r5, r0 // move decrypted msg to r0
+    STRm r1, r0 // store decrpt msg at mem[r1] , starting at Addr = 0
+    
+    ADDi #1 // r0 = 1
+    ADDr r1, r0 // r1 = r1 + 1  
+    ADDr r2, r0 // r2 = r2 + 1
+    
+    MOVrhl r6, r0 // r0 = r6 = curr_lsfr
+    MOVr r5, r0  // r5 = curr_lfsr
+    ANDr r6, r3 // curr_lsfr & taps
+    RXOR r6, r0 //XOR on bottom 7 bits of r6, r0 doesnt do anything. 1 bit value
+    ADDi #1 // r0 = 1
+    LSL r5, r0 // shift r5 left by 1
+    MOVrhl r5, r0 // r0 = r5 = left shifted curr_lfsr
+    ORRr r6, r0 //r6 now holds curr_lfsr for next loop
+    CMP r0,r0 // turn on 0 flag
+    Badd Dcrpt // back
+
+DONE 
+    STOP r0, r0//  STOP
+    
+    
+
+
+
+    
+       
+    
+
+

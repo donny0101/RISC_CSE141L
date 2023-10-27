@@ -1,0 +1,138 @@
+run encryption program; original message = 
+ Knowledge comes, but wisdom lingers.    
+pt_no = 00000000
+LFSR_ptrn = 0x60, LFSR_init = 0x20
+i=          0, msg_pad=0x20, lfsr=0100000 msg_crypt w/ parity = 0x00
+i=          1, msg_pad=0x20, lfsr=1000001 msg_crypt w/ parity = 0xe1
+i=          2, msg_pad=0x20, lfsr=0000011 msg_crypt w/ parity = 0xa3
+i=          3, msg_pad=0x20, lfsr=0000110 msg_crypt w/ parity = 0xa6
+i=          4, msg_pad=0x20, lfsr=0001100 msg_crypt w/ parity = 0xac
+i=          5, msg_pad=0x20, lfsr=0011000 msg_crypt w/ parity = 0xb8
+i=          6, msg_pad=0x20, lfsr=0110000 msg_crypt w/ parity = 0x90
+i=          7, msg_pad=0x20, lfsr=1100001 msg_crypt w/ parity = 0x41
+i=          8, msg_pad=0x20, lfsr=1000010 msg_crypt w/ parity = 0xe2
+i=          9, msg_pad=0x20, lfsr=0000101 msg_crypt w/ parity = 0xa5
+i=         10, msg_pad=0x20, lfsr=0001010 msg_crypt w/ parity = 0xaa
+i=         11, msg_pad=0x20, lfsr=0010100 msg_crypt w/ parity = 0xb4
+i=         12, msg_pad=0x20, lfsr=0101000 msg_crypt w/ parity = 0x88
+i=         13, msg_pad=0x20, lfsr=1010001 msg_crypt w/ parity = 0x71
+i=         14, msg_pad=0x20, lfsr=0100011 msg_crypt w/ parity = 0x03
+i=         15, msg_pad=0x20, lfsr=1000111 msg_crypt w/ parity = 0xe7
+i=         16, msg_pad=0x4b, lfsr=0001111 msg_crypt w/ parity = 0x44
+i=         17, msg_pad=0x6e, lfsr=0011110 msg_crypt w/ parity = 0xf0
+i=         18, msg_pad=0x6f, lfsr=0111100 msg_crypt w/ parity = 0x53
+i=         19, msg_pad=0x77, lfsr=1111001 msg_crypt w/ parity = 0x8e
+i=         20, msg_pad=0x6c, lfsr=1110010 msg_crypt w/ parity = 0x1e
+i=         21, msg_pad=0x65, lfsr=1100100 msg_crypt w/ parity = 0x81
+i=         22, msg_pad=0x64, lfsr=1001000 msg_crypt w/ parity = 0xac
+i=         23, msg_pad=0x67, lfsr=0010001 msg_crypt w/ parity = 0xf6
+i=         24, msg_pad=0x65, lfsr=0100010 msg_crypt w/ parity = 0x47
+i=         25, msg_pad=0x20, lfsr=1000101 msg_crypt w/ parity = 0x65
+i=         26, msg_pad=0x63, lfsr=0001011 msg_crypt w/ parity = 0xe8
+i=         27, msg_pad=0x6f, lfsr=0010110 msg_crypt w/ parity = 0xf9
+i=         28, msg_pad=0x6d, lfsr=0101100 msg_crypt w/ parity = 0x41
+i=         29, msg_pad=0x65, lfsr=1011001 msg_crypt w/ parity = 0x3c
+i=         30, msg_pad=0x73, lfsr=0110011 msg_crypt w/ parity = 0xc0
+i=         31, msg_pad=0x2c, lfsr=1100111 msg_crypt w/ parity = 0x4b
+i=         32, msg_pad=0x20, lfsr=1001110 msg_crypt w/ parity = 0xee
+i=         33, msg_pad=0x62, lfsr=0011101 msg_crypt w/ parity = 0xff
+i=         34, msg_pad=0x75, lfsr=0111010 msg_crypt w/ parity = 0xcf
+i=         35, msg_pad=0x74, lfsr=1110101 msg_crypt w/ parity = 0x81
+i=         36, msg_pad=0x20, lfsr=1101010 msg_crypt w/ parity = 0xca
+i=         37, msg_pad=0x77, lfsr=1010100 msg_crypt w/ parity = 0xa3
+i=         38, msg_pad=0x69, lfsr=0101001 msg_crypt w/ parity = 0xc0
+i=         39, msg_pad=0x73, lfsr=1010011 msg_crypt w/ parity = 0xa0
+i=         40, msg_pad=0x64, lfsr=0100111 msg_crypt w/ parity = 0xc3
+i=         41, msg_pad=0x6f, lfsr=1001111 msg_crypt w/ parity = 0xa0
+i=         42, msg_pad=0x6d, lfsr=0011111 msg_crypt w/ parity = 0x72
+i=         43, msg_pad=0x20, lfsr=0111110 msg_crypt w/ parity = 0x1e
+i=         44, msg_pad=0x6c, lfsr=1111101 msg_crypt w/ parity = 0x11
+i=         45, msg_pad=0x69, lfsr=1111010 msg_crypt w/ parity = 0x93
+i=         46, msg_pad=0x6e, lfsr=1110100 msg_crypt w/ parity = 0x9a
+i=         47, msg_pad=0x67, lfsr=1101000 msg_crypt w/ parity = 0x0f
+i=         48, msg_pad=0x65, lfsr=1010000 msg_crypt w/ parity = 0x35
+i=         49, msg_pad=0x72, lfsr=0100001 msg_crypt w/ parity = 0x53
+i=         50, msg_pad=0x73, lfsr=1000011 msg_crypt w/ parity = 0x30
+i=         51, msg_pad=0x2e, lfsr=0000111 msg_crypt w/ parity = 0xa9
+i=         52, msg_pad=0x20, lfsr=0001110 msg_crypt w/ parity = 0x2e
+i=         53, msg_pad=0x20, lfsr=0011100 msg_crypt w/ parity = 0x3c
+i=         54, msg_pad=0x20, lfsr=0111000 msg_crypt w/ parity = 0x18
+i=         55, msg_pad=0x20, lfsr=1110001 msg_crypt w/ parity = 0xd1
+i=         56, msg_pad=0x20, lfsr=1100010 msg_crypt w/ parity = 0x42
+i=         57, msg_pad=0x20, lfsr=1000100 msg_crypt w/ parity = 0xe4
+i=         58, msg_pad=0x20, lfsr=0001001 msg_crypt w/ parity = 0xa9
+i=         59, msg_pad=0x20, lfsr=0010010 msg_crypt w/ parity = 0xb2
+i=         60, msg_pad=0x20, lfsr=0100100 msg_crypt w/ parity = 0x84
+i=         61, msg_pad=0x20, lfsr=1001001 msg_crypt w/ parity = 0x69
+i=         62, msg_pad=0x20, lfsr=0010011 msg_crypt w/ parity = 0x33
+i=         63, msg_pad=0x20, lfsr=0100110 msg_crypt w/ parity = 0x06
+encrypted string =  
+ CFLX0a‚EJT(‘#‡ds.>!L–g…ˆ™a\`kŽŸo!jC`@c@’>13:/UsPIN\8qb„IR$‰S&
+
+
+program 1:
+          0 bench msg:   00 dut msg: 00
+          1 bench msg:  e1 dut msg: e1
+          2 bench msg: C a3 dut msg: a3
+          3 bench msg: F a6 dut msg: a6
+          4 bench msg: L ac dut msg: ac
+          5 bench msg: X b8 dut msg: b8
+          6 bench msg: 0 90 dut msg: 90
+          7 bench msg: a 41 dut msg: 41
+          8 bench msg: ‚ e2 dut msg: e2
+          9 bench msg: E a5 dut msg: a5
+         10 bench msg: J aa dut msg: aa
+         11 bench msg: T b4 dut msg: b4
+         12 bench msg: ( 88 dut msg: 88
+         13 bench msg: ‘ 71 dut msg: 71
+         14 bench msg: # 03 dut msg: 03
+         15 bench msg: ‡ e7 dut msg: e7
+         16 bench msg: d 44 dut msg: 44
+         17 bench msg:  f0 dut msg: f0
+         18 bench msg: s 53 dut msg: 53
+         19 bench msg: . 8e dut msg: 8e
+         20 bench msg: > 1e dut msg: 1e
+         21 bench msg: ! 81 dut msg: 81
+         22 bench msg: L ac dut msg: ac
+         23 bench msg: – f6 dut msg: f6
+         24 bench msg: g 47 dut msg: 47
+         25 bench msg: … 65 dut msg: 65
+         26 bench msg: ˆ e8 dut msg: e8
+         27 bench msg: ™ f9 dut msg: f9
+         28 bench msg: a 41 dut msg: 41
+         29 bench msg: \ 3c dut msg: 3c
+         30 bench msg: ` c0 dut msg: c0
+         31 bench msg: k 4b dut msg: 4b
+         32 bench msg: Ž ee dut msg: ee
+         33 bench msg: Ÿ ff dut msg: ff
+         34 bench msg: o cf dut msg: cf
+         35 bench msg: ! 81 dut msg: 81
+         36 bench msg: j ca dut msg: ca
+         37 bench msg: C a3 dut msg: a3
+         38 bench msg: ` c0 dut msg: c0
+         39 bench msg: @ a0 dut msg: a0
+         40 bench msg: c c3 dut msg: c3
+         41 bench msg: @ a0 dut msg: a0
+         42 bench msg: ’ 72 dut msg: 72
+         43 bench msg: > 1e dut msg: 1e
+         44 bench msg: 1 11 dut msg: 11
+         45 bench msg: 3 93 dut msg: 93
+         46 bench msg: : 9a dut msg: 9a
+         47 bench msg: / 0f dut msg: 0f
+         48 bench msg: U 35 dut msg: 35
+         49 bench msg: s 53 dut msg: 53
+         50 bench msg: P 30 dut msg: 30
+         51 bench msg: I a9 dut msg: a9
+         52 bench msg: N 2e dut msg: 2e
+         53 bench msg: \ 3c dut msg: 3c
+         54 bench msg: 8 18 dut msg: 18
+         55 bench msg: q d1 dut msg: d1
+         56 bench msg: b 42 dut msg: 42
+         57 bench msg: „ e4 dut msg: e4
+         58 bench msg: I a9 dut msg: a9
+         59 bench msg: R b2 dut msg: b2
+         60 bench msg: $ 84 dut msg: 84
+         61 bench msg: ‰ 69 dut msg: 69
+         62 bench msg: S 33 dut msg: 33
+         63 bench msg: & 06 dut msg: 06
+score =          64/64
